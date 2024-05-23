@@ -1,38 +1,129 @@
 .App {
+  font-family: 'Arial', sans-serif;
   text-align: center;
+  padding: 20px;
+  width: 80%;
+  margin: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  color: #333;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input-section, .output-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.input-section {
+  margin-right: 20px;
+}
+
+.input-section label {
+  font-size: 18px;
+  margin-right: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.input-section input[type="text"] {
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 120px;
+  margin-right: 10px;
+}
+
+.input-section button {
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.input-section button:hover {
+  background-color: #0056b3;
+}
+
+.input-section button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.divider {
+  width: 2px;
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 2px;
+}
+
+.output-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.matrix-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.matrix-row {
+  display: flex;
+}
+
+.matrix-cell, .matrix-header-cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
-.App-link {
-  color: #61dafb;
+.matrix-cell {
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.matrix-cell:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #e6f7ff;
+}
+
+.matrix-header-cell {
+  font-weight: bold;
+  background-color: #e0e0e0;
+  border-color: #007bff;
+  margin: 2px;
+}
+
+.matrix-header-row {
+  display: flex;
+  gap: 88px;
+}
+
+.matrix-c2 {
+  width: 119px;
+  margin-right: 10px;
 }
