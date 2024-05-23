@@ -98,28 +98,23 @@ function App() {
           {size > 0 && (
             <>
               <div className="matrix">
-                <div className="matrix-row">
-                  <div className="matrix-header-cell"></div>
-                  {Array.from({ length: size }, (_, colIndex) => (
-                    <div key={colIndex} className="matrix-header-cell">{colIndex + 1}</div>
-                  ))}
-                </div>
-                {matrix.map((row, rowIndex) => (
-                  <div key={rowIndex} className="matrix-row">
-                    <div className="matrix-header-cell">{rowIndex + 1}</div>
-                    {row.map((cell, colIndex) => (
-                      <input
-                        key={colIndex}
-                        type="text"
-                        value={cell}
-                        onChange={(e) => handleCellChange(e, rowIndex, colIndex)}
-                        onBlur={(e) => handleCellBlur(e, rowIndex, colIndex)}
-                        className="matrix-cell"
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
+  <div className="matrix-row">
+    <div className="matrix-header-cell"></div>
+    {Array.from({ length: size }, (_, colIndex) => (
+      <div key={colIndex} className="matrix-header-cell">{colIndex + 1}</div>
+    ))}
+  </div>
+  {matrix.map((row, rowIndex) => (
+    <div key={rowIndex} className="matrix-row">
+      <div className="matrix-header-cell">{rowIndex + 1}</div>
+      {row.map((cell, colIndex) => (
+        <div key={`${rowIndex}-${colIndex}`} className="matrix-cell">
+          {cell}
+        </div>
+      ))}
+    </div>
+  ))}
+  </div>
               <button onClick={handleSubmit} disabled={disabledSubmit}>Submit</button>
             </>
           )}
