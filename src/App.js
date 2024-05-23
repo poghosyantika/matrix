@@ -6,6 +6,7 @@ function App() {
   const [size, setSize] = useState(0);
   const [matrix, setMatrix] = useState([]);
   const [showMatrix, setShowMatrix] = useState(false);
+  const [parsedMatrix, setParsedMatrix] = useState([]);
   const [disabledSubmit, setDisabledSubmit] = useState(true);
 
   const handleSizeInputChange = (e) => {
@@ -17,7 +18,6 @@ function App() {
     if (!isNaN(parsedValue) && parsedValue > 0) {
       setSize(parsedValue);
     } else {
-      alert('Please enter a valid positive integer for the matrix size.');
       setSize(0);
     }
   };
@@ -55,7 +55,6 @@ function App() {
   const handleCellBlur = (e, rowIndex, colIndex) => {
     const value = e.target.value;
     if (value !== '0' && value !== '1') {
-      alert('Please enter 0 or 1.');
       handleMatrixChange(rowIndex, colIndex, '');
     }
   };
@@ -64,11 +63,21 @@ function App() {
     return matrix.map(row => row.join('')).join('');
   };
 
+  const parseMatrixFromString = (matrixString, size) => {
+    const flatArray = matrixString.split('');
+    const matrix = [];
+    for (let i = 0; i < size; i++) {
+      const row = flatArray.slice(i * size, (i + 1) * size);
+      matrix.push(row);
+    }
+    return matrix;
+  };
+
   const handleSubmit = async () => {
     setShowMatrix(true);
     const matrixString = convertMatrixToString(matrix);
     try {
-      const response = await fetch(`http://127.0.0.1:8085/cgi-bin/CGISample.exe?matrix=${encodeURIComponent(matrixString)}`, {
+      const response = await fetch(`http://127.0.0.1:8085/cgi-bin/CGISample.exe?${encodeURIComponent(matrixString)}`, {
         method: 'GET'
       });
 
@@ -79,10 +88,11 @@ function App() {
       }
 
       const text = await response.text();
+      const parsedMatrixres = parseMatrixFromString(text, size);
+      setParsedMatrix(parsedMatrixres);
       console.log('API Response:', text);
     } catch (error) {
       console.error('Fetch error:', error);
-      alert(`Failed to fetch: ${error.message}`);
     }
   };
 
@@ -127,7 +137,7 @@ function App() {
           )}
         </div>
         <div className="divider"></div>
-        {showMatrix && (
+        {showMatrix && !!parsedMatrix.length (
           <div className="output-section">
             <h2>Matrix</h2>
             <div className="matrix">
@@ -137,7 +147,7 @@ function App() {
                   <div key={colIndex} className="matrix-header-cell">{colIndex + 1}</div>
                 ))}
               </div>
-              {matrix.map((row, rowIndex) => (
+              {parsedMatrix.map((row, rowIndex) => (
                 <div key={rowIndex} className="matrix-row">
                   <div className="matrix-header-cell">{rowIndex + 1}</div>
                   {row.map((cell, colIndex) => (

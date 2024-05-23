@@ -41,10 +41,10 @@ h1 {
 .input-section input[type="text"] {
   font-size: 16px;
   padding: 10px;
+  width: 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 120px;
-  margin-right: 10px;
+  margin-right: 2px;
 }
 
 .input-section button {
