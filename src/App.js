@@ -7,6 +7,7 @@ function App() {
   const [matrix, setMatrix] = useState([]);
   const [showMatrix, setShowMatrix] = useState(false);
   const [parsedMatrix, setParsedMatrix] = useState([]);
+  const [parsedMatrixSize, setParsedMatrixSize] = useState(0);
   const [disabledSubmit, setDisabledSubmit] = useState(true);
 
   const handleSizeInputChange = (e) => {
@@ -81,15 +82,15 @@ function App() {
         method: 'GET'
       });
 
-      console.log(response, 'response')
-
+      // console.log(response, 'response')
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       const text = await response.text();
-      const parsedMatrixres = parseMatrixFromString(text, size);
+      const parsedMatrixres = parseMatrixFromString(text, Math.sqrt(text.length));
+      console.log(parsedMatrixres)
       setParsedMatrix(parsedMatrixres);
+      setParsedMatrixSize(Math.sqrt(text.length))
       console.log('API Response:', text);
     } catch (error) {
       console.error('Fetch error:', error);
@@ -137,13 +138,13 @@ function App() {
           )}
         </div>
         <div className="divider"></div>
-        {showMatrix && !!parsedMatrix.length (
+        {showMatrix &&  (
           <div className="output-section">
             <h2>Matrix</h2>
             <div className="matrix">
               <div className="matrix-row">
                 <div className="matrix-header-cell"></div>
-                {Array.from({ length: size }, (_, colIndex) => (
+                {Array.from({ length: parsedMatrixSize }, (_, colIndex) => (
                   <div key={colIndex} className="matrix-header-cell">{colIndex + 1}</div>
                 ))}
               </div>
